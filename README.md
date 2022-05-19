@@ -38,15 +38,17 @@ LEFT JOIN Shippers
 ON Orders.ShipperID = Shippers.ShipperID
 GROUP BY ShipperName;
 ```
-Therefore, we can then find the totals orders by Speedy Express, which is 54:
+From the following code, we find there were 54 totals orders by Speedy Express:
 
-```
+```SQL
 SELECT COUNT(*), ShipperID
 FROM Orders
 GROUP BY ShipperID;
 ```
 
 ### b
+
+
 
 
 ### c
