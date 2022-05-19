@@ -7,7 +7,6 @@ df <- read_sheet("https://docs.google.com/spreadsheets/d/16i38oonuX1y1g7C_UAmiK9
 ## initial calculation
 df %>% summarise(mean(order_amount))
 
-
 ## corrected calculation
 df %>% summarise(aov = sum(order_amount) / sum(total_items))
 
