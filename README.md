@@ -9,11 +9,13 @@ This issue with the current calculation for average order value is that it finds
 
 ### b
 Both the mean and median average order value are suitable metrics. To find the mean, we can use the following code:
+
 ```R
 df %>% summarise(aov = sum(order_amount) / sum(total_items))
 ```
 
 After doing some exploring, I found that shops 42 and 78 were outliers in the dataset. Therefore, I removed them when re-calculating the mean and median values with the following code:
+
 ```R
 df %>% 
   filter(shop_id != 78, shop_id != 42) %>%
@@ -29,8 +31,8 @@ After removing the outliers, the average order value is roughly $150. This is a 
 ## Question 2
 
 ### a
-
 We know that Speedy Express is *ShipperID* 1 from the following code:
+
 ```SQL
 SELECT Orders.ShipperID, Shippers.ShipperID, Shippers.ShipperName
 FROM Orders
@@ -47,12 +49,26 @@ GROUP BY ShipperID;
 ```
 
 ### b
+The last name of the employee with the most orders is Peacock:
 
-
-
+```SQL
+SELECT LastName FROM Orders 
+JOIN Employees ON Orders.employeeID = Employees.employeeID
+GROUP BY Orders.employeeID
+ORDER BY COUNT(Orders.OrderID) DESC LIMIT 1
+```
 
 ### c
-
+The most ordered product by customers in Germany was Boston Crab Meat:
+```SQL
+SELECT ProductName, SUM(Quantity) AS Orders
+FROM Orders, OrderDetails, Customers, Products
+WHERE 
+	Customers.Country = "Germany" AND OrderDetails.OrderID = Orders.OrderID AND 
+	OrderDetails.ProductID = Products.ProductID AND Customers.CustomerID = Orders.CustomerID
+GROUP BY Products.ProductID
+ORDER BY Orders DESC;
+```
 
 
 
