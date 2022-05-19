@@ -18,10 +18,10 @@ After doing some exploring, I found that shops 42 and 78 were outliers in the da
 df %>% 
   filter(shop_id != 78, shop_id != 42) %>%
   summarise(aov_mean = sum(order_amount) / sum(total_items),
-            aov_median = median(order_amount/total_items))
+            aov_median = median(order_amount / total_items))
 ```
 
-An important thing to note is that this median calculation doesn't take into account the fact that some rows may have more item orders than others. However, since the largest items was 8, this did not have a significant effect on the results.
+An important thing to note is that this median calculation doesn't take into account the fact that some rows have more than one item per order. However, since the most items in an order was 8 after filtering out outlier shops, this did not have a significant effect on the results.
 
 ### c
 After removing the outliers, the average order value is roughly $150. This is a reasonable value, though it may still be on the higher end of affordable sneakers.
@@ -29,7 +29,26 @@ After removing the outliers, the average order value is roughly $150. This is a 
 ## Question 2
 
 ### a
+
+We know that Speedy Express is *ShipperID* 1 from the following code:
+```SQL
+SELECT Orders.ShipperID, Shippers.ShipperID, Shippers.ShipperName
+FROM Orders
+LEFT JOIN Shippers 
+ON Orders.ShipperID = Shippers.ShipperID
+GROUP BY ShipperName;
+```
+Therefore, we can then find the totals orders by Speedy Express, which is 54:
+
+```
+SELECT COUNT(*), ShipperID
+FROM Orders
+GROUP BY ShipperID;
+```
+
 ### b
+
+
 ### c
 
 

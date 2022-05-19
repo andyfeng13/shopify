@@ -17,7 +17,7 @@ df %>% group_by(shop_id) %>%
 
 ## shop 78 is also an outlier
 df %>% group_by(shop_id) %>% 
-  summarise(ave = mean(order_amount/total_items)) %>% 
+  summarise(ave = mean(order_amount / total_items)) %>% 
   arrange(-ave)
 
 ## further correction without outliers
@@ -25,7 +25,4 @@ df %>%
   filter(shop_id != 78, shop_id != 42) %>%
   summarise(aov_mean = sum(order_amount) / sum(total_items),
             aov_median = median(order_amount/total_items))
-
-
-
 
